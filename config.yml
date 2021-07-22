@@ -1,0 +1,10 @@
+logging:
+  level: INFO
+  loggers:
+    xyz.alprielse: DEBUG
+
+database:
+  driverClass: com.mysql.cj.jdbc.Driver
+  user: ${DB_USERNAME}
+  password: ${DB_PASSWORD}
+  url: ${DB_URL}
