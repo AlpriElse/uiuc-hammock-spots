@@ -18,3 +18,6 @@ CREATE TABLE trees (
   cultivar_abbreviation VARCHAR(8),
   multistem             TINYINT        -- 1 for true, 0 for false
 );
+
+--changeset aelse:1 created:07-23-2021
+ALTER TABLE trees ADD PRIMARY KEY (site_id);
