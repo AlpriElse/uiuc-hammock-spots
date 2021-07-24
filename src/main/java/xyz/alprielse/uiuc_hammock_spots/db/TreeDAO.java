@@ -2,14 +2,20 @@ package xyz.alprielse.uiuc_hammock_spots.db;
 
 import io.dropwizard.hibernate.AbstractDAO;
 import org.hibernate.SessionFactory;
-import xyz.alprielse.uiuc_hammock_spots.core.ImmutableTree;
+import xyz.alprielse.uiuc_hammock_spots.core.Tree;
 
-public class  TreeDAO extends AbstractDAO<ImmutableTree> {
+import java.util.List;
+
+public class  TreeDAO extends AbstractDAO<Tree> {
     public TreeDAO(SessionFactory factory) {
         super(factory);
     }
 
-    public ImmutableTree create(ImmutableTree tree) {
+    public Tree create(Tree tree) {
         return persist(tree);
+    }
+
+    public List<Tree> findAll() {
+        return list(namedTypedQuery("xyz.alprielse.uiuc_hammock_spots.core.Tree.findAll"));
     }
 }

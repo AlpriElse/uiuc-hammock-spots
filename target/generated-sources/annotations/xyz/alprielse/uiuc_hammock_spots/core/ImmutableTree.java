@@ -22,7 +22,7 @@ import org.immutables.value.Generated;
 @Generated(from = "Tree", generator = "Immutables")
 @SuppressWarnings({"all"})
 @ParametersAreNonnullByDefault
-@javax.annotation.processing.Generated("org.immutables.processor.ProxyProcessor")
+@javax.annotation.Generated("org.immutables.processor.ProxyProcessor")
 @Immutable
 @CheckReturnValue
 public final class ImmutableTree extends Tree {
