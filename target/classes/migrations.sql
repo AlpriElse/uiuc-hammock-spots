@@ -31,3 +31,8 @@ CREATE TABLE tree_distances (
     CHECK       (site1_id > site2_id),   -- enforce 'direction' to prevent double entries
     CHECK       (site1_id <> site2_id)
 )
+
+--changeset aelse:3 create:07-25-2021
+ALTER TABLE tree_distances
+    ADD FOREIGN KEY (site1_id) REFERENCES trees (site_id),
+    ADD FOREIGN KEY (site2_id) REFERENCES trees (site_id);
