@@ -1,6 +1,7 @@
 package xyz.alprielse.uiuc_hammock_spots.resources;
 
 import io.dropwizard.hibernate.UnitOfWork;
+import xyz.alprielse.uiuc_hammock_spots.core.Response;
 import xyz.alprielse.uiuc_hammock_spots.core.Tree;
 import xyz.alprielse.uiuc_hammock_spots.db.TreeDAO;
 
@@ -22,7 +23,11 @@ public class TreeResource {
 
     @GET
     @UnitOfWork
-    public List<Tree> getTrees() {
-        return treeDAO.findAll();
+    public Response<List<Tree>> getTrees() {
+        List<Tree> trees = treeDAO.findAll();
+
+        Response<List<Tree>> res = new Response<>(200, true, trees);
+
+        return res;
     }
 }
