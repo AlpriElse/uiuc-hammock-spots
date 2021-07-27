@@ -137,7 +137,11 @@ dmypy.json
 # Cython debug symbols
 cython_debug/
 
+# /scripts
 ./scripts-env
 .env
 
+# /uiuc-hammock-spots-api
 ./uiuc-hammock-spots-api/target/*
+
+# /uiuc-hammock-spots-ui
