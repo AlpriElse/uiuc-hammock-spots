@@ -1,4 +1,4 @@
-from sqlalchemy import Table, Column, Integer, Float, String, Boolean, MetaData
+from sqlalchemy import PrimaryKeyConstraint, Table, Column, Integer, Float, String, Boolean, MetaData
 
 _metadata = MetaData()
 
@@ -19,5 +19,6 @@ tree_table = Table(
     Column('species', String),
     Column('dbh', Integer),
     Column('cultivar_abbreviation', String),
-    Column('multistem', Boolean)
+    Column('multistem', Boolean),
+    PrimaryKeyConstraint('site_id')
 )
