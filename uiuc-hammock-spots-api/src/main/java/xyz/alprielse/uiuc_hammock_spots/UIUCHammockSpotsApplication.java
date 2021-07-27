@@ -10,13 +10,17 @@ import io.dropwizard.migrations.MigrationsBundle;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
 import xyz.alprielse.uiuc_hammock_spots.core.Tree;
+import xyz.alprielse.uiuc_hammock_spots.core.TreeDistance;
 import xyz.alprielse.uiuc_hammock_spots.db.TreeDAO;
+import xyz.alprielse.uiuc_hammock_spots.db.TreeDistanceDAO;
 import xyz.alprielse.uiuc_hammock_spots.resources.HelloWorldResource;
+import xyz.alprielse.uiuc_hammock_spots.resources.TreeDistancesResource;
 import xyz.alprielse.uiuc_hammock_spots.resources.TreeResource;
 
 public class UIUCHammockSpotsApplication extends Application<UIUCHammockSpotsConfiguration> {
 
-    private final HibernateBundle<UIUCHammockSpotsConfiguration> hibernate = new HibernateBundle<UIUCHammockSpotsConfiguration>(Tree.class) {
+    private final HibernateBundle<UIUCHammockSpotsConfiguration> hibernate =
+            new HibernateBundle<UIUCHammockSpotsConfiguration>(Tree.class, TreeDistance.class) {
         @Override
         public PooledDataSourceFactory getDataSourceFactory(UIUCHammockSpotsConfiguration configuration) {
             return configuration.getDataSourceFactory();
@@ -54,8 +58,10 @@ public class UIUCHammockSpotsApplication extends Application<UIUCHammockSpotsCon
     public void run(final UIUCHammockSpotsConfiguration configuration,
                     final Environment environment) {
         final TreeDAO treeDAO = new TreeDAO(hibernate.getSessionFactory());
+        final TreeDistanceDAO treeDistanceDAO = new TreeDistanceDAO(hibernate.getSessionFactory());
 
         environment.jersey().register(new HelloWorldResource());
         environment.jersey().register(new TreeResource(treeDAO));
+        environment.jersey().register(new TreeDistancesResource(treeDistanceDAO));
     }
 }
