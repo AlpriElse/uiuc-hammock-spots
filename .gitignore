@@ -144,4 +144,3 @@ cython_debug/
 # /uiuc-hammock-spots-api
 ./uiuc-hammock-spots-api/target/*
 
-# /uiuc-hammock-spots-ui
