@@ -1,14 +1,17 @@
-import React, { createContext, useReducer } from 'react'
+import React, { createContext, useEffect, useReducer, useState } from 'react'
 
+import { fetchTrees } from './api/Trees'
+import { fetchTreeDistances } from './api/TreeDistances'
+import { StoreState } from './types'
 import { AnyAction, ActionType } from './constants/ActionTypes'
 
-interface StoreState {
-  minimum_tree_distance: number
-  maximum_tree_distance: number
-}
+const DEFAULT_MINIMUM_TREE_DISTANCE = 10
+const DEFAULT_MAXIMUM_TREE_DISTANCE = 15
+
 const initialState: StoreState = {
-  minimum_tree_distance: 10,
-  maximum_tree_distance: 15,
+  minimum_tree_distance: DEFAULT_MINIMUM_TREE_DISTANCE,
+  maximum_tree_distance: DEFAULT_MAXIMUM_TREE_DISTANCE,
+  trees: [],
 }
 
 const store = createContext({
@@ -18,6 +21,24 @@ const store = createContext({
 const { Provider } = store
 
 const StateProvider = ({ children }: { children: React.ReactNode }) => {
+  //  Init API Calls
+  const [trees, setTrees] = useState([])
+  const [treeDistances, setTreeDistances] = useState([])
+  useEffect(() => {
+    fetchTrees().then((res) => {
+      const receivedTees = res.data.payload
+      setTrees(receivedTees)
+    })
+    fetchTreeDistances(
+      DEFAULT_MINIMUM_TREE_DISTANCE,
+      DEFAULT_MAXIMUM_TREE_DISTANCE,
+    ).then((res) => {
+      const receivedTreeDistances = res.data.payload
+      setTreeDistances(receivedTreeDistances)
+    })
+  }, [])
+
+  //  Handle User Actions
   const [state, dispatch]: [state: StoreState, dispatch: any] = useReducer(
     (state: StoreState, action: AnyAction) => {
       switch (action.type) {
@@ -44,7 +65,13 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
     initialState,
   )
 
-  return <Provider value={{ state, dispatch }}>{children}</Provider>
+  const newState = {
+    ...state,
+    trees,
+    treeDistances,
+  }
+
+  return <Provider value={{ state: newState, dispatch }}>{children}</Provider>
 }
 
 export { store, StateProvider }

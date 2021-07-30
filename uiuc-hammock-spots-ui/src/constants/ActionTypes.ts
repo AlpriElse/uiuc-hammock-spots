@@ -7,6 +7,12 @@ export type AnyAction =
   | SetMaximumTreeDistanceAction
   | FilterHammockSpotsAction
 
+export enum ActionType {
+  SET_MINIMUM_TREE_DISTANCE = 'SET_MINIMUM_TREE_DISTANCE',
+  SET_MAXIMUM_TREE_DISTANCE = 'SET_MAXIMUM_TREE_DISTANCE',
+  FILTER_HAMMOCK_SPOTS = 'FILTER_HAMMOCK_SPOTS',
+}
+
 export interface SetMinimumTreeDistanceAction {
   type: ActionType.SET_MINIMUM_TREE_DISTANCE
   minimum_tree_distance: number
@@ -17,10 +23,4 @@ export interface SetMaximumTreeDistanceAction {
 }
 export interface FilterHammockSpotsAction {
   type: ActionType.FILTER_HAMMOCK_SPOTS
-}
-
-export enum ActionType {
-  SET_MINIMUM_TREE_DISTANCE = 'SET_MINIMUM_TREE_DISTANCE',
-  SET_MAXIMUM_TREE_DISTANCE = 'SET_MAXIMUM_TREE_DISTANCE',
-  FILTER_HAMMOCK_SPOTS = 'FILTER_HAMMOCK_SPOTS',
 }
