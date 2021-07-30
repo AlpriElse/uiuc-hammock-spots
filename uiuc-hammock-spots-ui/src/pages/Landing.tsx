@@ -1,7 +1,13 @@
 import React from 'react'
 
+import Page from '../components/Page'
+
 const Landing = () => {
-  return <h1>Landing</h1>
+  return (
+    <Page>
+      <h1>Landing</h1>
+    </Page>
+  )
 }
 
 export default Landing

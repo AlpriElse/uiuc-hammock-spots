@@ -6,26 +6,21 @@ import { KATAWARE_DOKI } from '../constants/Colors'
 
 const StyledDiv = styled.div`
   background-color: ${KATAWARE_DOKI};
+  height: 100vh;
+  padding: 0;
 `
 
 const Page = ({ ...props }) => {
   return (
-    <div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Loading Assets</Link>
-          </li>
-          <li>
-            <Link to="/landing">Landing</Link>
-          </li>
-          <li>
-            <Link to="/map">Map</Link>
-          </li>
-        </ul>
-      </nav>
-      <StyledDiv {...props} />
-    </div>
+    <StyledDiv>
+      <Link to="/">Loading Assets</Link>
+
+      <Link to="/landing">Landing</Link>
+
+      <Link to="/map">Map</Link>
+
+      <div style={{ width: '100%', height: '100%' }} {...props} />
+    </StyledDiv>
   )
 }
 
