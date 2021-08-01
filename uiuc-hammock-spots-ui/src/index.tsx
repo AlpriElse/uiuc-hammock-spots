@@ -5,6 +5,8 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { StateProvider } from './store'
 
+import 'bootstrap/dist/css/bootstrap.css'
+
 import './index.css'
 
 ReactDOM.render(

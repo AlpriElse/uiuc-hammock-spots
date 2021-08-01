@@ -21,3 +21,9 @@ export interface Tree {
   x: number
   y: number
 }
+
+export interface TreeDistance {
+  site1_id: number
+  site2_id: number
+  distance: number
+}
