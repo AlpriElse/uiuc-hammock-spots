@@ -1,22 +1,16 @@
 package xyz.alprielse.uiuc_hammock_spots.db;
 
-import io.dropwizard.hibernate.AbstractDAO;
-import org.hibernate.SessionFactory;
+import org.jdbi.v3.sqlobject.config.RegisterFieldMapper;
+import org.jdbi.v3.sqlobject.customizer.Bind;
+import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import xyz.alprielse.uiuc_hammock_spots.core.TreeDistance;
 
 import java.util.List;
 
-public class TreeDistanceDAO extends AbstractDAO<TreeDistance> {
-    public TreeDistanceDAO(SessionFactory factory) {
-        super(factory);
-    }
-
-    public List<TreeDistance> find(Double minimumDistance, Double maximumDistance) {
-        List<TreeDistance> result = list(namedTypedQuery("xyz.alprielse.uiuc_hammock_spots.core.TreeDistance.find")
-                .setParameter("minimum_distance", minimumDistance)
-                .setParameter("maximum_distance", maximumDistance));
-
-        return result;
-    }
-
+@RegisterFieldMapper(TreeDistance.class)
+public interface TreeDistanceDAO {
+    @SqlQuery("SELECT * FROM tree_distances WHERE distance >= :minimum_distance AND distance <= :maximum_distance")
+    List<TreeDistance> find(
+            @Bind("minimum_distance") Double minimumDistance,
+            @Bind("maximum_distance") Double maximumDistance);
 }

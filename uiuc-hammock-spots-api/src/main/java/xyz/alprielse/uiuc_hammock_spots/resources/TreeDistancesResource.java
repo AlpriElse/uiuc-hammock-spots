@@ -1,6 +1,5 @@
 package xyz.alprielse.uiuc_hammock_spots.resources;
 
-import io.dropwizard.hibernate.UnitOfWork;
 import xyz.alprielse.uiuc_hammock_spots.core.Response;
 import xyz.alprielse.uiuc_hammock_spots.core.TreeDistance;
 import xyz.alprielse.uiuc_hammock_spots.db.TreeDistanceDAO;
@@ -19,7 +18,6 @@ public class TreeDistancesResource {
     }
 
     @GET
-    @UnitOfWork
     public Response<List<TreeDistance>> getDistances(
             @QueryParam("minimum_distance") @DefaultValue("0.0") Double minimumDistance,
             @QueryParam("maximum_distance") @DefaultValue("25.0") Double maximumDistance

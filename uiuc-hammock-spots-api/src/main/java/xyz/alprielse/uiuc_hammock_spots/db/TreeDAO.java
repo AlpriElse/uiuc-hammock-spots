@@ -1,21 +1,13 @@
 package xyz.alprielse.uiuc_hammock_spots.db;
 
-import io.dropwizard.hibernate.AbstractDAO;
-import org.hibernate.SessionFactory;
+import org.jdbi.v3.sqlobject.config.RegisterConstructorMapper;
+import org.jdbi.v3.sqlobject.statement.SqlQuery;
 import xyz.alprielse.uiuc_hammock_spots.core.Tree;
 
 import java.util.List;
 
-public class  TreeDAO extends AbstractDAO<Tree> {
-    public TreeDAO(SessionFactory factory) {
-        super(factory);
-    }
-
-    public Tree create(Tree tree) {
-        return persist(tree);
-    }
-
-    public List<Tree> findAll() {
-        return list(namedTypedQuery("xyz.alprielse.uiuc_hammock_spots.core.Tree.findAll"));
-    }
+@RegisterConstructorMapper(Tree.class)
+public interface TreeDAO {
+    @SqlQuery("SELECT * FROM trees")
+    List<Tree> findAll();
 }

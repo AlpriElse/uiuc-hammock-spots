@@ -1,54 +1,76 @@
 package xyz.alprielse.uiuc_hammock_spots.core;
 
-import javax.persistence.*;
 
-@Entity(name = "trees")
-@NamedQueries({
-        @NamedQuery(
-                name = "xyz.alprielse.uiuc_hammock_spots.core.Tree.findAll",
-                query = "FROM trees t"
-        )
-})
+import org.jdbi.v3.core.mapper.reflect.ColumnName;
+
+import java.beans.ConstructorProperties;
+
 public class Tree {
-    @Column(name = "nearest_building")
     private String nearestBuilding;
-
     private Double x;
-
     private Double y;
-
     private Double latitude;
-
     private Double longitude;
-
-    @Column(name = "inventory_date")
     private String inventoryDate;
-
-    @Id
-    @Column(name = "site_id")
     private Integer siteId;
-
-    @Column(name = "site_comments")
     private String siteComments;
-
-    @Column(name = "site_last_changed_by")
     private String siteLastChangeBy;
-
-    @Column(name = "site_change_date")
     private String siteChangeDate;
-
-    @Column(name = "site_change_time")
     private String siteChangeTime;
-
     private String species;
-
     private Integer dbh;
-
-    @Column(name = "cultivar_abbreviation")
     private String cultivarAbbreviation;
-
-    @Column(columnDefinition = "tinyint")
     private Boolean multistem;
+
+    @ConstructorProperties({
+            "nearestBuilding",
+            "x",
+            "y",
+            "latitude",
+            "longitude",
+            "inventoryDate",
+            "siteId",
+            "siteComments",
+            "siteLastChangeBy",
+            "siteChangeDate",
+            "siteChangeTime",
+            "species",
+            "dbh",
+            "cultivarAbbreviation",
+            "multistem"
+    })
+    public Tree(
+            @ColumnName("nearest_building") String nearestBuilding,
+            Double x,
+            Double y,
+            Double latitude,
+            Double longitude,
+            @ColumnName("inventory_date") String inventoryDate,
+            @ColumnName("site_id") Integer siteId,
+            @ColumnName("site_comments") String siteComments,
+            @ColumnName("site_last_changed_by") String siteLastChangeBy,
+            @ColumnName("site_change_date") String siteChangeDate,
+            @ColumnName("site_change_time")String siteChangeTime,
+            String species,
+            Integer dbh,
+            @ColumnName("cultivar_abbreviation") String cultivarAbbreviation,
+            Integer multistem) {
+        this.nearestBuilding = nearestBuilding;
+        this.x = x;
+        this.y = y;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.inventoryDate = inventoryDate;
+        this.siteId = siteId;
+        this.siteComments = siteComments;
+        this.siteLastChangeBy = siteLastChangeBy;
+        this.siteChangeDate = siteChangeDate;
+        this.siteChangeTime = siteChangeTime;
+        this.species = species;
+        this.dbh = dbh;
+        this.cultivarAbbreviation = cultivarAbbreviation;
+        this.multistem = multistem == 1;
+    }
 
     public String getNearestBuilding() {
         return nearestBuilding;
