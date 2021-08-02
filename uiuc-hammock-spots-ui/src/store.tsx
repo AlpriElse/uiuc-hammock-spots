@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useReducer } from 'react'
 
-import { fetchTrees } from './api/Trees'
+import { fetchTreesGeoJSON } from './api/Trees'
 import { fetchTreeDistances } from './api/TreeDistances'
 import { StoreState } from './types'
 import { AnyAction, ActionType } from './constants/ActionTypes'
@@ -76,7 +76,7 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
 
   //  Init API Calls
   useEffect(() => {
-    fetchTrees().then((res) =>
+    fetchTreesGeoJSON().then((res) =>
       dispatch({
         type: ActionType.RECEIVED_TREES,
         trees: res.data.payload,

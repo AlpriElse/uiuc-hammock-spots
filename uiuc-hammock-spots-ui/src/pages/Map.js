@@ -1,10 +1,30 @@
 import React, { useContext, useMemo, useState } from 'react'
-import { Marker, StaticMap } from 'react-map-gl'
+import ReactMapGL, { Source, Layer } from 'react-map-gl'
 
 import FilterControls from '../components/FilterControls'
 import Page from '../components/Page'
-import Tree from '../components/Tree'
 import { store } from '../store'
+import { KATAWARE_DOKI } from '../constants/Colors'
+
+const TREE_LAYER_STYLE = {
+  id: 'point',
+  type: 'circle',
+  paint: {
+    'circle-radius': [
+      'interpolate',
+      ['linear'],
+      ['get', 'dbh'],
+      //  When dbh is 1 radius is 1.5
+      1,
+      2.5,
+      //  When dbh is >=30 radius is 6
+      30,
+      6,
+    ],
+    'circle-color': KATAWARE_DOKI,
+    'circle-opacity': 0.75,
+  },
+}
 
 const LOCATIONS = {
   MAIN_QUAD: {
@@ -26,39 +46,33 @@ const Map = () => {
     longitude: LOCATIONS.MAIN_QUAD.longitude,
     zoom: 17.5,
     mapStyle: 'mapbox://styles/alprielse/ckrs0k3re0plk18pbdd6v36xm',
+    interactive: true,
   })
 
   //  Only render on trees load
-  const treeMarkers = useMemo(() => {
-    return state.trees.map(({ siteId, latitude, longitude, dbh }) => (
-      <Marker key={siteId} latitude={latitude} longitude={longitude}>
-        <Tree dbh={dbh} />
-      </Marker>
-    ))
-  }, [state.trees])
-
-  //  Limit renders
-  const staticMap = useMemo(
+  const treeLayer = useMemo(
     () => (
-      <StaticMap
-        {...viewport}
-        onViewportChange={(nextViewport) =>
-          setViewport({
-            ...viewport,
-            nextViewport,
-          })
-        }
-      >
-        {treeMarkers}
-      </StaticMap>
+      <Source id="my-data" type="geojson" data={state.trees}>
+        <Layer {...TREE_LAYER_STYLE} />
+      </Source>
     ),
-    [viewport, treeMarkers],
+    [state.trees],
   )
 
   return (
     <Page>
       <FilterControls />
-      {staticMap}
+      <ReactMapGL
+        {...viewport}
+        onViewportChange={(nextViewport) =>
+          setViewport({
+            ...viewport,
+            ...nextViewport,
+          })
+        }
+      >
+        {treeLayer}
+      </ReactMapGL>
     </Page>
   )
 }
