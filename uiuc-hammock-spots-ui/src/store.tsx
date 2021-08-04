@@ -1,11 +1,11 @@
 import React, { createContext, useEffect, useReducer } from 'react'
 
 import { fetchTreesGeoJSON } from './api/Trees'
-import { fetchTreeDistances } from './api/TreeDistances'
+import { fetchTreeDistancesGeoJSON } from './api/TreeDistances'
 import { StoreState } from './types'
 import { AnyAction, ActionType } from './constants/ActionTypes'
 
-const DEFAULT_MINIMUM_TREE_DISTANCE = 10
+const DEFAULT_MINIMUM_TREE_DISTANCE = 5
 const DEFAULT_MAXIMUM_TREE_DISTANCE = 15
 
 const initialState: StoreState = {
@@ -58,12 +58,14 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
           //  Start API Request, Return existing state, Dispatch action on Callback
           const { minimum_tree_distance, maximum_tree_distance } = state
 
-          fetchTreeDistances(minimum_tree_distance, maximum_tree_distance).then(
-            (res) =>
-              dispatch({
-                type: ActionType.RECEIVED_TREE_DISTANCES,
-                treeDistances: res.data.payload,
-              }),
+          fetchTreeDistancesGeoJSON(
+            minimum_tree_distance,
+            maximum_tree_distance,
+          ).then((res) =>
+            dispatch({
+              type: ActionType.RECEIVED_TREE_DISTANCES,
+              treeDistances: res.data.payload,
+            }),
           )
           return state
         }
@@ -82,7 +84,7 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
         trees: res.data.payload,
       }),
     )
-    fetchTreeDistances(
+    fetchTreeDistancesGeoJSON(
       DEFAULT_MINIMUM_TREE_DISTANCE,
       DEFAULT_MAXIMUM_TREE_DISTANCE,
     ).then((res) =>

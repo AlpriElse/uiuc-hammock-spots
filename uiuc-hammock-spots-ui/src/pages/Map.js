@@ -4,7 +4,7 @@ import ReactMapGL, { Source, Layer } from 'react-map-gl'
 import FilterControls from '../components/FilterControls'
 import Page from '../components/Page'
 import { store } from '../store'
-import { KATAWARE_DOKI } from '../constants/Colors'
+import { KATAWARE_DOKI, RENGOKU } from '../constants/Colors'
 
 const TREE_LAYER_STYLE = {
   id: 'point',
@@ -23,6 +23,15 @@ const TREE_LAYER_STYLE = {
     ],
     'circle-color': KATAWARE_DOKI,
     'circle-opacity': 0.75,
+  },
+}
+
+const HAMMOCK_LAYER_STYLE = {
+  id: 'route',
+  type: 'line',
+  paint: {
+    'line-color': RENGOKU,
+    'line-width': 2,
   },
 }
 
@@ -59,6 +68,15 @@ const Map = () => {
     [state.trees],
   )
 
+  const hammockLayer = useMemo(
+    () => (
+      <Source id="hammocks" type="geojson" data={state.treeDistances}>
+        <Layer {...HAMMOCK_LAYER_STYLE} />
+      </Source>
+    ),
+    [state.treeDistances],
+  )
+
   return (
     <Page>
       <FilterControls />
@@ -72,6 +90,7 @@ const Map = () => {
         }
       >
         {treeLayer}
+        {hammockLayer}
       </ReactMapGL>
     </Page>
   )
