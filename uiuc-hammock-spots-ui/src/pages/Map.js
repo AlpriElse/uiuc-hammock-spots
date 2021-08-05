@@ -1,9 +1,10 @@
 import React, { useContext, useMemo, useState } from 'react'
 import ReactMapGL, { Source, Layer } from 'react-map-gl'
 
+import { store } from '../store'
+
 import FilterControls from '../components/FilterControls'
 import Page from '../components/Page'
-import { store } from '../store'
 import { KATAWARE_DOKI, RENGOKU } from '../constants/Colors'
 
 const TREE_LAYER_STYLE = {
@@ -35,24 +36,17 @@ const HAMMOCK_LAYER_STYLE = {
   },
 }
 
-const LOCATIONS = {
-  MAIN_QUAD: {
-    latitude: 40.1075,
-    longitude: -88.2272,
-  },
-  SOUTH_QUAD: {
-    latitude: 40.103,
-    longitude: -88.2272,
-  },
+const MAIN_QUAD = {
+  latitude: 40.1075,
+  longitude: -88.2272,
 }
+
 const Map = () => {
   const { state } = useContext(store)
 
   const [viewport, setViewport] = useState({
-    width: '100vv',
-    height: '100vh',
-    latitude: LOCATIONS.MAIN_QUAD.latitude,
-    longitude: LOCATIONS.MAIN_QUAD.longitude,
+    latitude: MAIN_QUAD.latitude,
+    longitude: MAIN_QUAD.longitude,
     zoom: 17.5,
     mapStyle: 'mapbox://styles/alprielse/ckrs0k3re0plk18pbdd6v36xm',
     interactive: true,
@@ -82,6 +76,8 @@ const Map = () => {
       <FilterControls />
       <ReactMapGL
         {...viewport}
+        width="100%"
+        height="100%"
         onViewportChange={(nextViewport) =>
           setViewport({
             ...viewport,

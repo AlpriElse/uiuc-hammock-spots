@@ -20,7 +20,7 @@ const StyledDiv = styled.div`
   background-color: ${Colors.KATAWARE_DOKI};
   border-radius: 1.5em;
   padding: 2em 1.75em;
-  min-width: 20vw;
+  min-width: 16vw;
 
   box-shadow: 0px 6px 7px 1px rgba(171, 171, 171, 0.26);
   -webkit-box-shadow: 0px 6px 7px 1px rgba(171, 171, 171, 0.26);
@@ -30,7 +30,7 @@ const StyledDiv = styled.div`
 const SliderLabel = styled.span`
   padding: 0.5em;
   padding-left: 0;
-  font-size: 1.1em;
+  font-size: 1em;
   min-width: 2.5em;
 `
 
@@ -38,6 +38,11 @@ const StyledButton = styled(Button)`
   background-color: ${Colors.SACHI};
   border-color: ${Colors.SACHI};
   &:hover {
+    color: ${Colors.KATAWARE_DOKI};
+    background-color: ${Colors.MAHITO};
+    border-color: ${Colors.MAHITO};
+  }
+  &:active {
     color: ${Colors.KATAWARE_DOKI};
     background-color: ${Colors.MAHITO};
     border-color: ${Colors.MAHITO};
@@ -67,9 +72,9 @@ const FilterControls = () => {
 
   return (
     <StyledDiv>
-      <h3 className="pb-4">Hammock Spots</h3>
+      <h4 className="pb-4">Hammock Spots</h4>
       <div className="pb-3">
-        <h5>Minimum Distance Between Trees</h5>
+        <h6>Minimum Distance Between Trees</h6>
         <UIFlex align="center">
           <SliderLabel>{minimum_tree_distance}</SliderLabel>
           <UIRangeInput
@@ -81,7 +86,7 @@ const FilterControls = () => {
         </UIFlex>
       </div>
       <div className="pb-3">
-        <h5>Maximum Distance Between Trees</h5>
+        <h6>Maximum Distance Between Trees</h6>
         <UIFlex align="center">
           <SliderLabel>{maximum_tree_distance}</SliderLabel>
           <UIRangeInput
