@@ -9,3 +9,22 @@
 ## Health Check
 
 To see your applications health enter url `http://localhost:8081/healthcheck`
+
+## Docker Usage
+
+### Build Docker image
+```
+docker build -t uiuc-hammock-spots .
+```
+
+### Create environment variables file `.env`
+```
+DB_USERNAME=<YOUR USERNAME>
+DB_PASSWORD=<YOUR PASSWORD>
+DB_URL=jdbc:mysql://<YOUR DB URL>
+```
+
+### Run Docker image
+```
+docker run -p <HOST PORT TO BIND>:8080 --env-file .env uiuc-hammock-spots
+```
