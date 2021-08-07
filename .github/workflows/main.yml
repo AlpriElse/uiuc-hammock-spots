@@ -18,6 +18,8 @@ env:
                                                # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: uiuc-hammock-spots-api           # set this to the name of the container in the
                                                # containerDefinitions section of your task definition
+                                               
+  API_BUILD_PATH: ./uiuc-hammock-spots-api
 
 defaults:
   run:
@@ -55,7 +57,7 @@ jobs:
           # Build a docker container and
           # push it to ECR so that it can
           # be deployed to ECS.
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG ${{ env.API_BUILD_PATH}}
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
 
