@@ -1,4 +1,4 @@
-# UIUC Hammock Spots
+#UIUC Hammock Spots
 
 UIUC (University of Illinois at Urbana-Champaign) tree data was taken from the [Campus Tree Inventory](https://icap.sustainability.illinois.edu/project/campus-tree-inventory) project which contains a dataset which inventoried each tree on campus.
 
@@ -23,4 +23,11 @@ It is recommended to use a Python virtual environment (`venv`)
 
 ```bash
 pip install -r requirements.txt
+```
+
+## .aws
+
+### Updating task-definition.json
+```bash
+aws --region us-east-1 ecs describe-task-definition --task-definition uiuc-hammock-spots-api --query taskDefinition > task-definition.json
 ```
