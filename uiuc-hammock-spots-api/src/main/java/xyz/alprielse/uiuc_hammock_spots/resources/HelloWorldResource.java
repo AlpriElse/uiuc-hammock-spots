@@ -14,7 +14,7 @@ public class HelloWorldResource {
     }
 
     @GET
-    public String alive() {
-        return "I am Alive!";
+    public boolean alive() {
+        return true;
     }
 }
