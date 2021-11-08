@@ -1,10 +1,11 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
-import Button from 'react-bootstrap/Button'
+import { Transition } from 'react-transition-group'
 
 import { ActionType } from '../constants/ActionTypes'
 import { store } from '../store'
 
+import UIButton from '../UIComponents/UIButton'
 import UIFlex from '../UIComponents/UIFlex'
 import UIRangeInput from '../UIComponents/UIRangeInput'
 import * as Colors from '../constants/Colors'
@@ -34,22 +35,25 @@ const SliderLabel = styled.span`
   min-width: 2.5em;
 `
 
-const StyledButton = styled(Button)`
-  background-color: ${Colors.SACHI};
-  border-color: ${Colors.SACHI};
-  &:hover {
-    color: ${Colors.KATAWARE_DOKI};
-    background-color: ${Colors.MAHITO};
-    border-color: ${Colors.MAHITO};
-  }
-  &:active {
-    color: ${Colors.KATAWARE_DOKI};
-    background-color: ${Colors.MAHITO};
-    border-color: ${Colors.MAHITO};
-  }
-`
+const duration = 300
+const defaultStyle = {
+  transition: `opacity ${duration}ms ease-in-out, transform ${duration}ms ease-in-out`,
+  opacity: 0,
+  transform: 'translateY(-10px)',
+}
+const transitionStyles = {
+  entering: { opacity: 1, transform: 'translateY(0)' },
+  entered: { opacity: 1, transform: 'translateY(0)' },
+  exiting: { opacity: 0 },
+  exited: { opacity: 0 },
+}
 
 const FilterControls = () => {
+  const [isRendered, setIsRendered] = useState(false)
+  useEffect(() => {
+    setTimeout(() => setIsRendered(true), 1000)
+  }, [])
+
   const { state, dispatch } = useContext(store)
   const { minimum_tree_distance, maximum_tree_distance } = state
 
@@ -71,42 +75,46 @@ const FilterControls = () => {
     })
 
   return (
-    <StyledDiv>
-      <h4 className="pb-4">Hammock Spots</h4>
-      <div className="pb-3">
-        <h6>Minimum Distance Between Trees</h6>
-        <UIFlex align="center">
-          <SliderLabel>{minimum_tree_distance}</SliderLabel>
-          <UIRangeInput
-            min={MINIMUM_POSSIBLE_TREE_DISTANCE}
-            max={MAXIMUM_POSSIBLE_TREE_DISTANCE}
-            value={minimum_tree_distance}
-            onChange={handleMinimumTreeDistanceChange}
-          />
-        </UIFlex>
-      </div>
-      <div className="pb-3">
-        <h6>Maximum Distance Between Trees</h6>
-        <UIFlex align="center">
-          <SliderLabel>{maximum_tree_distance}</SliderLabel>
-          <UIRangeInput
-            min={MINIMUM_POSSIBLE_TREE_DISTANCE}
-            max={MAXIMUM_POSSIBLE_TREE_DISTANCE}
-            value={maximum_tree_distance}
-            onChange={handleMaximumTreeDistanceChange}
-          />
-        </UIFlex>
-      </div>
-      <div className="d-grid">
-        <StyledButton
-          variant="primary"
-          size="lg"
-          onClick={handleHammockFilterClick}
-        >
-          Find Hammock Spots
-        </StyledButton>
-      </div>
-    </StyledDiv>
+    <Transition in={isRendered} timeout={duration}>
+      {(state) => (
+        <StyledDiv style={{ ...defaultStyle, ...transitionStyles[state] }}>
+          <h4 className="pb-4">Hammock Spots</h4>
+          <div className="pb-3">
+            <h6>Minimum Distance Between Trees</h6>
+            <UIFlex align="center">
+              <SliderLabel>{minimum_tree_distance}</SliderLabel>
+              <UIRangeInput
+                min={MINIMUM_POSSIBLE_TREE_DISTANCE}
+                max={MAXIMUM_POSSIBLE_TREE_DISTANCE}
+                value={minimum_tree_distance}
+                onChange={handleMinimumTreeDistanceChange}
+              />
+            </UIFlex>
+          </div>
+          <div className="pb-3">
+            <h6>Maximum Distance Between Trees</h6>
+            <UIFlex align="center">
+              <SliderLabel>{maximum_tree_distance}</SliderLabel>
+              <UIRangeInput
+                min={MINIMUM_POSSIBLE_TREE_DISTANCE}
+                max={MAXIMUM_POSSIBLE_TREE_DISTANCE}
+                value={maximum_tree_distance}
+                onChange={handleMaximumTreeDistanceChange}
+              />
+            </UIFlex>
+          </div>
+          <div className="d-grid">
+            <UIButton
+              variant="primary"
+              size="lg"
+              onClick={handleHammockFilterClick}
+            >
+              Find Hammock Spots
+            </UIButton>
+          </div>
+        </StyledDiv>
+      )}
+    </Transition>
   )
 }
 
