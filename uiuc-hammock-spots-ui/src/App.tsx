@@ -2,8 +2,7 @@ import React from 'react'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
 import Landing from './pages/Landing'
-import Loading from './pages/Loading'
-import Map from './pages/Map'
+import Map from './pages/MapPage'
 
 function App() {
   return (
@@ -12,9 +11,6 @@ function App() {
             renders the first one that matches the current URL. */}
       <Switch>
         <Route exact path="/">
-          <Loading />
-        </Route>
-        <Route path="/landing">
           <Landing />
         </Route>
         <Route path="/map">
