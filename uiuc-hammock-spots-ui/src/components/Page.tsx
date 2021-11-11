@@ -13,14 +13,6 @@ const StyledDiv = styled.div`
 const Page = ({ ...props }) => {
   return (
     <StyledDiv>
-      {/* <div style={{ position: 'fixed', zIndex: 12 }}>
-        <Link to="/">Loading Assets</Link>
-
-        <Link to="/landing">Landing</Link>
-
-        <Link to="/map">Map</Link>
-      </div> */}
-
       <div style={{ width: '100%', height: '100%' }} {...props} />
     </StyledDiv>
   )

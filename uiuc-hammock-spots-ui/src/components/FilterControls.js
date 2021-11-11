@@ -33,6 +33,7 @@ const SliderLabel = styled.span`
   padding-left: 0;
   font-size: 1em;
   min-width: 2.5em;
+  font-family: 'Roboto', sans-serif;
 `
 
 const duration = 300
@@ -80,7 +81,7 @@ const FilterControls = () => {
         <StyledDiv style={{ ...defaultStyle, ...transitionStyles[state] }}>
           <h4 className="pb-4">Hammock Spots</h4>
           <div className="pb-3">
-            <h6>Minimum Distance Between Trees</h6>
+            <h6 className="copy-font">Minimum Distance Between Trees</h6>
             <UIFlex align="center">
               <SliderLabel>{minimum_tree_distance}</SliderLabel>
               <UIRangeInput
@@ -92,7 +93,7 @@ const FilterControls = () => {
             </UIFlex>
           </div>
           <div className="pb-3">
-            <h6>Maximum Distance Between Trees</h6>
+            <h6 className="copy-font">Maximum Distance Between Trees</h6>
             <UIFlex align="center">
               <SliderLabel>{maximum_tree_distance}</SliderLabel>
               <UIRangeInput

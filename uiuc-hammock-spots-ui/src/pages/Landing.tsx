@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 
 import { store } from '../store'
 
 import UIFlex from '../UIComponents/UIFlex'
 
+import LoadingSpinner from '../components/loading-spinner/LoadingSpinner'
 import Page from '../components/Page'
 import WelcomeMessage from '../components/WelcomeMessage'
 
@@ -14,8 +15,24 @@ const Loading = () => {
   return (
     <Page>
       <UIFlex direction="column" justify="center" style={{ height: '100%' }}>
-        <UIFlex direction="row" justify="center" style={{ width: '100%' }}>
-          {isLoading ? <h1>Loading...</h1> : <WelcomeMessage />}
+        <UIFlex
+          direction="row"
+          justify="center"
+          style={{ width: '100%' }}
+          wrap="wrap"
+        >
+          {isLoading ? (
+            <div>
+              <h1 className="center-block" style={{ fontSize: '3em' }}>
+                loading...
+              </h1>
+              <UIFlex className="" direction="row" justify="center">
+                <LoadingSpinner />
+              </UIFlex>
+            </div>
+          ) : (
+            <WelcomeMessage />
+          )}
         </UIFlex>
       </UIFlex>
     </Page>

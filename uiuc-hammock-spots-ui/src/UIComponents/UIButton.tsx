@@ -18,10 +18,10 @@ const StyledButton = styled(Button)`
     border-color: ${Colors.MAHITO};
   }
 
-  transition: transform 200ms ease-in-out;
+  transition: transform 150ms ease-in-out;
   transform: translateY(0);
   &:hover {
-    transform: translateY(-3px);
+    transform: translateY(-5px);
   }
 `
 
