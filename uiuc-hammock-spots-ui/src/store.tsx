@@ -43,6 +43,10 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
         case ActionType.RECEIVED_TREES: {
           const { trees } = action
 
+          if (trees == null || !Array.isArray(trees)) {
+            return state
+          }
+
           return Object.assign({}, state, {
             trees,
           })
@@ -78,12 +82,14 @@ const StateProvider = ({ children }: { children: React.ReactNode }) => {
 
   //  Init API Calls
   useEffect(() => {
-    fetchTreesGeoJSON().then((res) =>
-      dispatch({
-        type: ActionType.RECEIVED_TREES,
-        trees: res.data.payload,
-      }),
-    )
+    fetchTreesGeoJSON().then((res) => {
+      if (res.data.payload != null) {
+        dispatch({
+          type: ActionType.RECEIVED_TREES,
+          trees: res.data.payload,
+        })
+      }
+    })
     fetchTreeDistancesGeoJSON(
       DEFAULT_MINIMUM_TREE_DISTANCE,
       DEFAULT_MAXIMUM_TREE_DISTANCE,
